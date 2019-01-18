@@ -5,13 +5,14 @@
         <div class="key-row" v-for="(row, index) in currentButtons" :key="index">
           <button type="button" v-for="(key, i) in row" :key="i" :class="getClass(key)" :style="getStyle(key)" @mousedown="pressAndHold($event, key)" @mouseup="pressAndHold($event, key)" @click.prevent="buttonPress(key)" @touchstart="pressAndHold($event, key)" @touchend="pressAndHold($event, key)">
             <div class="text">
-              <svg class="icon" v-if="getIconByMetaKey(key)">
-                <use :xlink:href="`static/icons.svg#icon-${getIconByMetaKey(key)}`"></use>
-              </svg>
+              <template v-if="key === '{backspace}'">Backspace</template>
+              <template v-else-if="/(shift(l|r))/g.test(key)">Shift</template>
               <template v-else-if="/(ctrl(l|r))/g.test(key)">Ctrl</template>
-              <template v-else-if="key === '{alt}'">Alt</template>
-              <template v-else-if="key === '{altgr}'">Alt Gr</template>
+              <template v-else-if="key === '{enter}'">Enter</template>
+              <template v-else-if="key === '{tab}'">Tab</template>
+              <template v-else-if="key === '{capslock}'">Capslock</template>
               <template v-else-if="/(space|empty)/g.test(key)">&nbsp;</template>
+              <template v-else-if="/(alt|altgr)/g.test(key)">Alt</template>
               <template v-else>{{ key }}</template>
             </div>
           </button>
